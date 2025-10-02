@@ -1,0 +1,317 @@
+[gd_scene load_steps=21 format=3 uid="uid://dhhob3w5uy1ru"]
+
+[ext_resource type="Script" uid="uid://bg3hfmy8l4oug" path="res://scripts/level_director.gd" id="1_vtaks"]
+[ext_resource type="Script" uid="uid://bo68fknwevus5" path="res://scripts/change_level.gd" id="2_kvpfn"]
+[ext_resource type="Material" uid="uid://b8rr64ait5l42" path="res://materials/end.tres" id="3_dinhu"]
+[ext_resource type="Material" uid="uid://ddxjtcdyjalru" path="res://materials/obs.tres" id="4_kvuet"]
+[ext_resource type="Material" uid="uid://crxbu7sg5efh4" path="res://materials/ground.tres" id="5_trtic"]
+[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="6_ir15t"]
+[ext_resource type="Script" uid="uid://c3a5t8vh63ixn" path="res://scripts/movement.gd" id="7_ca42v"]
+[ext_resource type="Material" uid="uid://ce0slj8v4fklc" path="res://materials/player.tres" id="8_rysoc"]
+[ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="9_ssvqc"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="10_264po"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eow3j"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_j5wjh"]
+material = ExtResource("3_dinhu")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fc0e3"]
+size = Vector3(1, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7jktm"]
+material = ExtResource("4_kvuet")
+size = Vector3(1, 1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e2o6t"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_feb5d"]
+material = ExtResource("5_trtic")
+size = Vector3(10, 1, 10)
+
+[sub_resource type="Environment" id="Environment_fc0e3"]
+background_mode = 1
+background_color = Color(0.19607843, 0, 0, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.19607843, 0.19607843, 0.19607843, 1)
+glow_enabled = true
+glow_bloom = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_feb5d"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_e2o6t"]
+material = ExtResource("8_rysoc")
+
+[sub_resource type="Resource" id="Resource_lc2xo"]
+script = ExtResource("10_264po")
+duration = 2.0
+transition = 7
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Levels" type="Node3D" parent="." node_paths=PackedStringArray("levels", "camera")]
+script = ExtResource("1_vtaks")
+levels = [NodePath("Level1"), NodePath("Level2"), NodePath("Level3"), NodePath("Level4")]
+camera = NodePath("../PC")
+
+[node name="Level4" type="Node3D" parent="Levels"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -1, 0)
+
+[node name="End" type="StaticBody3D" parent="Levels/Level4" node_paths=PackedStringArray("hit_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 3, 4)
+script = ExtResource("2_kvpfn")
+hit_area = NodePath("Area3D")
+level = 4
+
+[node name="Area3D" type="Area3D" parent="Levels/Level4/End"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Levels/Level4/End/Area3D"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+shape = SubResource("BoxShape3D_eow3j")
+debug_fill = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level4/End"]
+shape = SubResource("BoxShape3D_eow3j")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level4/End"]
+mesh = SubResource("BoxMesh_j5wjh")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Levels/Level4"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level4/StaticBody3D2"]
+shape = SubResource("BoxShape3D_fc0e3")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level4/StaticBody3D2"]
+mesh = SubResource("BoxMesh_7jktm")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Levels/Level4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level4/StaticBody3D3"]
+shape = SubResource("BoxShape3D_fc0e3")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level4/StaticBody3D3"]
+mesh = SubResource("BoxMesh_7jktm")
+
+[node name="Level3" type="Node3D" parent="Levels"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -1, 0)
+
+[node name="End" type="StaticBody3D" parent="Levels/Level3" node_paths=PackedStringArray("hit_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, 4)
+script = ExtResource("2_kvpfn")
+hit_area = NodePath("Area3D")
+level = 3
+
+[node name="Area3D" type="Area3D" parent="Levels/Level3/End"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Levels/Level3/End/Area3D"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+shape = SubResource("BoxShape3D_eow3j")
+debug_fill = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level3/End"]
+shape = SubResource("BoxShape3D_eow3j")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level3/End"]
+mesh = SubResource("BoxMesh_j5wjh")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Levels/Level3"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level3/StaticBody3D2"]
+shape = SubResource("BoxShape3D_fc0e3")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level3/StaticBody3D2"]
+mesh = SubResource("BoxMesh_7jktm")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Levels/Level3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level3/StaticBody3D3"]
+shape = SubResource("BoxShape3D_fc0e3")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level3/StaticBody3D3"]
+mesh = SubResource("BoxMesh_7jktm")
+
+[node name="Level2" type="Node3D" parent="Levels"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, -1, 0)
+
+[node name="End" type="StaticBody3D" parent="Levels/Level2" node_paths=PackedStringArray("hit_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 1, -4)
+script = ExtResource("2_kvpfn")
+hit_area = NodePath("Area3D")
+level = 2
+
+[node name="Area3D" type="Area3D" parent="Levels/Level2/End"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Levels/Level2/End/Area3D"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+shape = SubResource("BoxShape3D_eow3j")
+debug_fill = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level2/End"]
+shape = SubResource("BoxShape3D_eow3j")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level2/End"]
+mesh = SubResource("BoxMesh_j5wjh")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Levels/Level2"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level2/StaticBody3D2"]
+shape = SubResource("BoxShape3D_fc0e3")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level2/StaticBody3D2"]
+mesh = SubResource("BoxMesh_7jktm")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Levels/Level2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level2/StaticBody3D3"]
+shape = SubResource("BoxShape3D_fc0e3")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level2/StaticBody3D3"]
+mesh = SubResource("BoxMesh_7jktm")
+
+[node name="Level1" type="Node3D" parent="Levels"]
+
+[node name="End" type="StaticBody3D" parent="Levels/Level1" node_paths=PackedStringArray("hit_area")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 1, -4)
+script = ExtResource("2_kvpfn")
+hit_area = NodePath("Area3D")
+level = 1
+
+[node name="Area3D" type="Area3D" parent="Levels/Level1/End"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Levels/Level1/End/Area3D"]
+transform = Transform3D(1.01, 0, 0, 0, 1.01, 0, 0, 0, 1.01, 0, 0, 0)
+shape = SubResource("BoxShape3D_eow3j")
+debug_fill = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level1/End"]
+shape = SubResource("BoxShape3D_eow3j")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level1/End"]
+mesh = SubResource("BoxMesh_j5wjh")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="Levels/Level1"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level1/StaticBody3D2"]
+shape = SubResource("BoxShape3D_fc0e3")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level1/StaticBody3D2"]
+mesh = SubResource("BoxMesh_7jktm")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="Levels/Level1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Level1/StaticBody3D3"]
+shape = SubResource("BoxShape3D_fc0e3")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Level1/StaticBody3D3"]
+mesh = SubResource("BoxMesh_7jktm")
+
+[node name="Ground" type="StaticBody3D" parent="Levels"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Levels/Ground"]
+shape = SubResource("BoxShape3D_e2o6t")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Levels/Ground"]
+mesh = SubResource("BoxMesh_feb5d")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.9396926, 0.34202015, 0, -0.34202015, -0.9396926, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_fc0e3")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1, 0)
+rotation_order = 0
+current = true
+fov = 100.0
+
+[node name="Node3D" type="Node3D" parent="Camera3D"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("6_ir15t")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1, 2.5)
+collision_layer = 3
+script = ExtResource("7_ca42v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("BoxShape3D_feb5d")
+debug_fill = false
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("BoxMesh_e2o6t")
+
+[node name="PC2" type="Node3D" parent="." node_paths=PackedStringArray("up_target")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 1, 0)
+rotation_order = 0
+script = ExtResource("9_ssvqc")
+tween_resource = SubResource("Resource_lc2xo")
+inactive_update_mode = 1
+follow_offset = Vector3(0, 8, 0)
+follow_damping = true
+follow_damping_value = Vector3(1, 1, 1)
+follow_axis_lock = 5
+follow_distance = 8.0
+spring_length = 8.0
+look_at_damping = true
+look_at_damping_value = 0.1
+up_target = NodePath("../Levels/Ground")
+
+[node name="PC" type="Node3D" parent="." node_paths=PackedStringArray("up_target")]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 8, 0)
+rotation_order = 0
+visible = false
+script = ExtResource("9_ssvqc")
+priority = 1
+tween_resource = SubResource("Resource_lc2xo")
+inactive_update_mode = 1
+follow_offset = Vector3(0, 8, 0)
+follow_damping = true
+follow_damping_value = Vector3(1, 1, 1)
+follow_axis_lock = 5
+follow_distance = 8.0
+spring_length = 8.0
+look_at_damping = true
+look_at_damping_value = 0.1
+up_target = NodePath("../Levels/Ground")
+
+[connection signal="change" from="Levels/Level4/End" to="Levels" method="_level_change"]
+[connection signal="on_change" from="Levels/Level4/End" to="Player" method="_on_change"]
+[connection signal="change" from="Levels/Level3/End" to="Levels" method="_level_change"]
+[connection signal="on_change" from="Levels/Level3/End" to="Player" method="_on_change"]
+[connection signal="change" from="Levels/Level2/End" to="Levels" method="_level_change"]
+[connection signal="on_change" from="Levels/Level2/End" to="Player" method="_on_change"]
+[connection signal="change" from="Levels/Level1/End" to="Levels" method="_level_change"]
+[connection signal="on_change" from="Levels/Level1/End" to="Player" method="_on_change"]
