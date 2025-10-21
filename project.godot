@@ -30,7 +30,6 @@ display_server/driver.linuxbsd="wayland"
 
 movie_writer/video_quality=1.0
 movie_writer/movie_file="/home/munity/Videos/v.avi"
-movie_writer/fps=30
 
 [editor_plugins]
 
